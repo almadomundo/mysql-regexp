@@ -10,25 +10,29 @@ BEGIN
    DECLARE delim    VARCHAR(255) DEFAULT '';
    DECLARE chunk    VARCHAR(255) DEFAULT '';
    DECLARE result   VARCHAR(255) DEFAULT '';
+   DECLARE isbegin  TINYINT      DEFAULT 1;
+
    IF LOCATE(j, s) THEN
       SIGNAL SQLSTATE '42000' SET MESSAGE_TEXT = 'Input string must not contain joining delimiter';
    END IF;
-   mainLoop: WHILE(CHAR_LENGTH(s)) DO
+
+   WHILE(CHAR_LENGTH(s)) DO
       SET delim = GET_LEFT_DELIMITER(s, p);
-      IF d && CHAR_LENGTH(delim) THEN
-         SET result = CONCAT(result, j, delim);
-      END IF;
-      IF s = delim THEN
-         LEAVE mainLoop;
-      END IF;
-      SET s     = SUBSTR(s, 1 + CHAR_LENGTH(delim));
-      SET chunk = GET_LEFT_CHUNK(s, p);
-      IF(!CHAR_LENGTH(chunk)) THEN
-         LEAVE mainLoop;
-      END IF;
-      SET s     = SUBSTR(s, 1 + CHAR_LENGTH(chunk));
-      SET result = CONCAT(result, j, chunk);
-   END WHILE mainLoop;
+      WHILE CHAR_LENGTH(delim) DO
+         IF d THEN
+            SET result = CONCAT(result, j, delim);
+         END IF;
+         IF isbegin THEN
+            SET result = CONCAT(result, j, '');
+         END IF;
+         SET s = SUBSTR(s, 1 + CHAR_LENGTH(delim));
+         SET delim = GET_LEFT_DELIMITER(s, p);
+      END WHILE;
+      SET chunk   = GET_LEFT_CHUNK(s, p);
+      SET result  = CONCAT(result, j, chunk);
+      SET s       = SUBSTR(s, 1 + CHAR_LENGTH(chunk));
+      SET isbegin = 0;
+   END WHILE;
    RETURN SUBSTR(result, 1 + CHAR_LENGTH(j));
 END//
 DELIMITER ;
