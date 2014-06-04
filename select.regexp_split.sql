@@ -1,4 +1,4 @@
---split @string by regex @regex and return as row set, using single query
+-- Split @string by regex @regex and return as row set, using single query
 
 SELECT 
   part 
