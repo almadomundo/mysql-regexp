@@ -1,6 +1,5 @@
 -- Replace by regex `p` for string `r` in input string `s`
--- May fail, if `s` contains exactly '!@#$%^&*)(*&^%$#@!'
--- But then don't blame me
+-- Crappy because of greedy. It's a nutshell. Will be re-written
 
 DELIMITER //
 CREATE FUNCTION REGEXP_REPLACE(s VARCHAR(255), p VARCHAR(255),r VARCHAR(255))

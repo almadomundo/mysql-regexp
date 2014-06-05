@@ -5,19 +5,12 @@ DELIMITER //
 CREATE FUNCTION GET_RIGHT_DELIMITER(s VARCHAR(255), p VARCHAR(255))
 RETURNS VARCHAR(255) DETERMINISTIC
 BEGIN
-   DECLARE current  VARCHAR(255) DEFAULT '';
-   DECLARE position INT DEFAULT 0;
+   DECLARE position INT DEFAULT 1;
+   SET p = CONCAT('^(', p, ')$');
 
-   SET current  = s;
-   SET position = 1;
-   WHILE position<=CHAR_LENGTH(s) && current REGEXP p DO
+   WHILE position<=CHAR_LENGTH(s) && !(SUBSTR(s, position) REGEXP p) DO
       SET position = position + 1;
-      SET current  = SUBSTR(current, 2);
    END WHILE;
-   SET current = SUBSTR(s, position - 1);
-   IF current REGEXP CONCAT('^(', p, ')$') THEN
-      RETURN current;
-   END IF;
-   RETURN '';
+   RETURN SUBSTR(s, position);
 END//
 DELIMITER ;
