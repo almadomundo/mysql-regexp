@@ -1,0 +1,3 @@
+-- Plain benchmark for GET_RIGHT_DELIMITER
+
+SELECT BENCHMARK(?, GET_RIGHT_DELIMITER(?, ?)) AS measure;
