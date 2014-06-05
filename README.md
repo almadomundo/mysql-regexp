@@ -7,5 +7,6 @@ _This functions have no guarantee and are NOT well-tested. Regex lookup is based
 
 **Known issues**
 
+- Impossible to use `^` or `$` in expressions. No multiline support.
 - No support for negative/positive lookaheads/lookbehinds. 
 - Anything else?
