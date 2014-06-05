@@ -32,7 +32,13 @@ If something went wrong, MySQL will return error with the corresponding message.
 mysql> call test_regexp_replace;
 ERROR 1644 (42000): Test id < 19 >: assertion that ( REGEXP_REPLACE("foobarbaz", "[a-z]+", "") ) is "f", failed
 </pre>
-Testing procedure will stop after first failure and will not continue.
+Testing procedure will stop after first failure and will not continue. Since this framework is using assertion model, it can not be used for testing procedures, because result will be used in an expression.
+<br/>
+If the corresponding tests were not found, an error will also occur:
+<pre>
+mysql> call test_regexp_split();
+ERROR 1644 (42000): Tests for specified function name or test number were not found
+</pre>
 
 **Known issues**
 
