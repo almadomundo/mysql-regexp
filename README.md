@@ -10,3 +10,10 @@ _This functions have no guarantee and are NOT well-tested. Regex lookup is based
 - Impossible to use `^` or `$` in expressions. No multiline support.
 - No support for negative/positive lookaheads/lookbehinds. 
 - Anything else?
+
+**Complexity/Use cases**
+
+As it is, full string with length `n` reconstruction will cause O(n<sup>2</sup>) complexity. Yeas, that means, you'll have n<sup>2</sup> `REGEXP` calls. So before using this, think twice. However, valid use-case may be to define some variable with this `REGEXP_*` functions, then use it in query.
+
+<br/>
+<sub>If your intention is to use this functionality and it can not be moved from DBMS to application, then probably you're a badass :-)</sub>
